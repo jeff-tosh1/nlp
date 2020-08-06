@@ -8,12 +8,12 @@ files = [i for i in os.listdir('./') if i.endswith('trn1')]
 m = MeCab.Tagger()
 out = ""
 
-for f in files:
+for file in files:
     text = []
     dic = {}
     tf = np.empty((0,len(dic)))
-    with open(f, encoding='Shift-JIS') as file:
-        for n,line in enumerate(file):
+    with open(file, encoding='Shift-JIS') as doc:
+        for n,line in enumerate(doc):
             text.append(line)
             words = m.parse(line).split()
             del words[-1]
@@ -46,9 +46,9 @@ for f in files:
     
     scores = sorted(scores.items(), key=lambda x:x[1], reverse=True)
     
-    out += '-----'+f+'-----\n'
+    out += '-----'+file+'-----\n'
     for i in range(5):
         out += str(i+1)+'位:('+str(scores[i][0]+1)+'行目)'+text[scores[i][0]]+'\n'
     
-with open('textrank-result.txt','w') as file:
-    file.write(out)
+with open('textrank-result.txt','w') as txt:
+    txt.write(out)
